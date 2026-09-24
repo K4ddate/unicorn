@@ -798,6 +798,18 @@ static void gen_insn_hook_utype(DisasContext *ctx, uint32_t insn_id, int32_t imm
     check_exit_request(tcg_ctx);
 }
 
+static void gen_insn_hook_privileged(DisasContext *ctx, uint32_t insn_id)
+{
+    TCGContext *tcg_ctx = ctx->uc->tcg_ctx;
+
+    tcg_gen_movi_tl(tcg_ctx, tcg_ctx->cpu_pc, ctx->base.pc_next);
+
+    gen_helper_insn_hook_privileged(tcg_ctx, tcg_ctx->cpu_env,
+                                    tcg_const_i32(tcg_ctx, insn_id),
+                                    tcg_const_i64(tcg_ctx, ctx->base.pc_next));
+    check_exit_request(tcg_ctx);
+}
+
 /* Include insn module translation function */
 #include "insn_trans/trans_rvi.inc.c"
 #include "insn_trans/trans_rvm.inc.c"

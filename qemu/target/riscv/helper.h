@@ -113,3 +113,11 @@ DEF_HELPER_6(insn_hook_stype, void, env, i32, i64, s32, i32, i32)
 #endif
 
 DEF_HELPER_5(insn_hook_utype, void, env, i32, i64, s32, i32)
+
+#if defined(TARGET_RISCV32)
+# define helper_insn_hook_privileged  helper_insn_hook_privileged_riscv32
+#elif defined(TARGET_RISCV64)
+# define helper_insn_hook_privileged  helper_insn_hook_privileged_riscv64
+#endif
+
+DEF_HELPER_3(insn_hook_privileged, void, env, i32, i64)
