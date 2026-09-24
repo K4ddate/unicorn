@@ -282,3 +282,20 @@ void helper_insn_hook_utype(CPURISCVState *env, uint32_t insn_id, uint64_t pc, i
         }
     }
 }
+
+void helper_insn_hook_privileged(CPURISCVState *env, uint32_t insn_id, uint64_t pc)
+{
+    struct uc_struct *uc = env->uc;
+    struct hook *hook;
+
+    HOOK_FOREACH_VAR_DECLARE;
+    HOOK_FOREACH(env->uc, hook, UC_HOOK_INSN) {
+        if (hook->to_delete)
+            continue;
+        if (!HOOK_BOUND_CHECK(hook, env->pc))
+            continue;
+        if (hook->insn == insn_id) {
+            ((uc_cb_insn_privileged_t)hook->callback)(uc, pc, hook->user_data);
+        }
+    }
+}

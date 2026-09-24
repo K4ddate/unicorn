@@ -367,6 +367,13 @@ typedef enum uc_riscv {
   UC_RISCV_INS_NOP,
   UC_RISCV_INS_ECALL,
   UC_RISCV_INS_EBREAK,
+  UC_RISCV_INS_URET,
+  UC_RISCV_INS_SRET,
+  UC_RISCV_INS_MRET,
+  UC_RISCV_INS_WFI,
+
+  UC_RISCV_INS_FENCE,
+  UC_RISCV_INS_FENCEI,
 
   // CSR instructions
   UC_RISCV_INS_CSRRW,
@@ -376,8 +383,10 @@ typedef enum uc_riscv {
   UC_RISCV_INS_CSRRSI,
   UC_RISCV_INS_CSRRCI,
 
-  UC_RISCV_INS_FENCE,
-  UC_RISCV_INS_FENCEI,
+  UC_RISCV_INS_SFENCEVMA,
+  UC_RISCV_INS_SFENCEVM,
+  UC_RISCV_INS_HFENCEGVMA,
+  UC_RISCV_INS_HFENCEBVMA,
 
   UC_RISCV_INS_ENDING, // mark the end of the list of insn
 } uc_riscv_insn;
@@ -393,6 +402,9 @@ typedef void (*uc_cb_insn_stype_t)(struct uc_struct *uc, uint64_t pc, uint32_t i
 
 // Generic callback type for U type instructions
 typedef void (*uc_cb_insn_utype_t)(struct uc_struct *uc, uint64_t pc, uint32_t imm, uint32_t rd, void *userdata);
+
+// Generic callback type for privileged instructions
+typedef void (*uc_cb_insn_privileged_t)(struct uc_struct *uc, uint64_t pc, void *userdata);
 
 #ifdef __cplusplus
 }
