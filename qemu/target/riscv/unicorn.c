@@ -279,7 +279,6 @@ static bool riscv_stop_interrupt(struct uc_struct *uc, int intno)
 
 static bool riscv_insn_hook_validate(uint32_t insn_enum)
 {
-    // return insn_enum == UC_RISCV_INS_JALR || insn_enum == UC_RISCV_INS_JAL;
     return insn_enum < UC_RISCV_INS_ENDING && insn_enum > UC_RISCV_INS_INVALID;
 }
 

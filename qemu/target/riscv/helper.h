@@ -79,8 +79,7 @@ DEF_HELPER_2(mret, tl, env, tl)
 DEF_HELPER_1(wfi, void, env)
 DEF_HELPER_1(tlb_flush, void, env)
 
-/* instruction based hooks */
-
+/* Instruction based hooks */
 #if defined(TARGET_RISCV32)
 # define helper_insn_hook_rtype  helper_insn_hook_rtype_riscv32
 #elif defined(TARGET_RISCV64)
@@ -103,7 +102,6 @@ DEF_HELPER_6(insn_hook_itype, void, env, i32, i64, s32, i32, i32)
 # define helper_insn_hook_stype  helper_insn_hook_stype_riscv64
 #endif
 
-/* instruction based hooks */
 DEF_HELPER_6(insn_hook_stype, void, env, i32, i64, s32, i32, i32)
 
 #if defined(TARGET_RISCV32)
